@@ -1,0 +1,8 @@
+﻿# Visual Studio / .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.db
+
