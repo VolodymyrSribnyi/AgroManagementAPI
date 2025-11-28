@@ -1,8 +1,10 @@
 
 using AgroindustryManagementAPI.Services.Calculations;
 using AgroindustryManagementAPI.Services.Database;
+using AgroManagementAPI.Mappings;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -48,6 +50,9 @@ namespace AgroManagementAPI
                 });
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
+            
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+            
             builder.Services.AddScoped<IAGCalculationService, AGCalculationService>();
             builder.Services.AddScoped<IAGDatabaseService, AGDatabaseService>();
             builder.Services.AddDbContext<AGDatabaseContext>(options =>
