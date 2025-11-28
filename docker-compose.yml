@@ -1,0 +1,94 @@
+﻿version: '3.8'
+
+services:
+  # SQL Server (MSSQL)
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: agro_mssql_server
+    platform: linux/amd64
+    environment:
+      SA_PASSWORD: "YourPassword123!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - agro_network
+    healthcheck:
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P YourPassword123!  -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PostgreSQL
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: agro_postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: AgroindustryAPIDB
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - agro_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # MySQL
+  mysql-db:
+    image: mysql:8.0
+    container_name: agro_mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql_password
+      MYSQL_DATABASE: AgroindustryAPIDB
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - agro_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # . NET API
+  agro-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agro_management_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DatabaseSettings__Provider=Postgres
+    ports:
+      - "5001:80"
+      - "5002:443"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      mysql-db:
+        condition: service_healthy
+#      mssql-server:
+#        condition: service_healthy
+    networks:
+      - agro_network
+    volumes:
+      - ./AgroindustryAPI.db:/app/AgroindustryAPI. db
+
+volumes:
+  mssql_data:
+  postgres_data:
+  mysql_data:
+
+networks:
+  agro_network:
+    driver: bridge
