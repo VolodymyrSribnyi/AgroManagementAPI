@@ -71,6 +71,10 @@ namespace AgroManagementAPI
                     case "postgres":
                         options.UseNpgsql(connectionStrings.GetValue<string>("Postgres"));
                         break;
+                    case "mysql":
+                        options.UseMySql(connectionStrings. GetValue<string>("MySQL"), 
+                            ServerVersion.AutoDetect(connectionStrings.GetValue<string>("MySQL")));
+                        break;
                     case "inmemory":
                         options.UseInMemoryDatabase("AGInMemoryDb");
                         break;
