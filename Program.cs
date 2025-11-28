@@ -55,6 +55,9 @@ namespace AgroManagementAPI
             
             builder.Services.AddScoped<IAGCalculationService, AGCalculationService>();
             builder.Services.AddScoped<IAGDatabaseService, AGDatabaseService>();
+            
+            // I got error 'Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 1: 'no such table: Fields' '
+            // databaseContext.Database.EnsureCreated() should be called
             builder.Services.AddDbContext<AGDatabaseContext>(options =>
             {
                 switch (dbProvider?.ToLower())
@@ -88,8 +91,7 @@ namespace AgroManagementAPI
                     c.SwaggerEndpoint("/swagger/v2/swagger.json", "Agroindustry Management API V2");
                 });
                 app.UseExceptionHandler("/error");
-            }
-            ;
+            };
 
             app.UseHttpsRedirection();
 

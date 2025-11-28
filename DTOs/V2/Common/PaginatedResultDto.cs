@@ -1,4 +1,4 @@
-namespace AgroManagementAPI.DTOs.V2.Response
+namespace AgroManagementAPI.DTOs.V2.Common
 {
     public class PaginatedResultDto<T>
     {
