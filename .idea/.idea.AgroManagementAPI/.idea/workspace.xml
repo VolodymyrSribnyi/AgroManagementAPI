@@ -8,8 +8,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394fa014-d7d7-4a38-af7a-73d2b3a671e2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Controllers/v1/WorkersController.cs" afterDir="false" />
+    <list default="true" id="394fa014-d7d7-4a38-af7a-73d2b3a671e2" name="Changes" comment="Add Docker support with MySQL, PostgreSQL, and SQL Server configurations">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AgroManagementAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AgroManagementAPI/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgroManagementAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/AgroManagementAPI.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +20,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -30,6 +31,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="366fhefoLHHv0EcXmmUlA5Fc5vr" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -39,7 +43,7 @@
     "HTTP Request.AgroManagementAPI | #1.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "IntegrationTests",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
