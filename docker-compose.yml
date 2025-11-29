@@ -1,6 +1,4 @@
-﻿version: '3.8'
-
-services:
+﻿services:
   # SQL Server (MSSQL)
   mssql-server:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -15,11 +13,6 @@ services:
       - mssql_data:/var/opt/mssql
     networks:
       - agro_network
-    healthcheck:
-      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P YourPassword123!  -Q "SELECT 1" || exit 1
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   # PostgreSQL
   postgres-db:
@@ -60,7 +53,48 @@ services:
       timeout: 5s
       retries: 5
 
-  # . NET API
+  # ========== SONARQUBE ==========
+
+  # PostgreSQL for SonarQube
+  sonarqube-postgres:
+    image: postgres:15-alpine
+    container_name: agro_sonarqube_postgres
+    environment:
+      POSTGRES_DB: sonar  # ← ЗМІНИВ З sonarqube НА sonar
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+    volumes:
+      - sonarqube_postgres_data:/var/lib/postgresql/data
+    networks:
+      - agro_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sonar"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # SonarQube
+  sonarqube:
+    image: sonarqube:9.9-community
+    container_name: agro_sonarqube
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonarqube-postgres:5432/sonar  # ← ТЕПЕР ПРАВИЛЬНО
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLED: "true"
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    depends_on:
+      sonarqube-postgres:
+        condition: service_healthy
+    networks:
+      - agro_network
+
+  # .  NET API
   agro-api:
     build:
       context: .
@@ -77,17 +111,19 @@ services:
         condition: service_healthy
       mysql-db:
         condition: service_healthy
-#      mssql-server:
-#        condition: service_healthy
     networks:
       - agro_network
     volumes:
-      - ./AgroindustryAPI.db:/app/AgroindustryAPI. db
+      - ./AgroindustryAPI.db:/app/AgroindustryAPI.db
 
 volumes:
   mssql_data:
   postgres_data:
   mysql_data:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:
+  sonarqube_postgres_data:
 
 networks:
   agro_network:
