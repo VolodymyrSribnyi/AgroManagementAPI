@@ -1,5 +1,6 @@
 using System;
 using AgroindustryManagementAPI.Models;
+using AgroManagementAPI.Models;
 
 namespace AgroindustryManagementAPI.Services.Calculations;
 

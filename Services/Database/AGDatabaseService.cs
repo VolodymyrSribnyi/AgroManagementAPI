@@ -2,6 +2,8 @@ using AgroindustryManagementAPI.Models;
 using AgroManagementAPI.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using AgroManagementAPI.Models;
+
 namespace AgroindustryManagementAPI.Services.Database;
 
 public class AGDatabaseService : IAGDatabaseService

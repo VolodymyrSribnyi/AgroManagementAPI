@@ -1,5 +1,6 @@
 using AgroindustryManagementAPI.Models;
 using AgroindustryManagementAPI.Services.Database;
+using AgroManagementAPI.Models;
 
 namespace AgroindustryManagementAPI.Services.Calculations;
 
