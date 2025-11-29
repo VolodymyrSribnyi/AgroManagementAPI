@@ -1,6 +1,6 @@
-using System;
+using AgroindustryManagementAPI.Models;
 
-namespace AgroindustryManagementAPI.Models;
+namespace AgroManagementAPI.Models;
 
 public class WorkerTask
 {

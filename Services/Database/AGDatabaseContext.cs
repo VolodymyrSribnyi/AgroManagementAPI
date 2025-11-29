@@ -1,4 +1,5 @@
 using AgroindustryManagementAPI.Models;
+using AgroManagementAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 

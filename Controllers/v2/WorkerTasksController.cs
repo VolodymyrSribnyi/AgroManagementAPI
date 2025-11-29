@@ -7,6 +7,7 @@ using AgroManagementAPI.DTOs.V2. Common;
 using Asp. Versioning;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using AgroManagementAPI.Models;
 
 namespace AgroManagementAPI.Controllers. v2
 {

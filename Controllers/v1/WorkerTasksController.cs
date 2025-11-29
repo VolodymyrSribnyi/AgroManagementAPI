@@ -2,6 +2,7 @@ using AutoMapper;
 using AgroindustryManagementAPI.Models;
 using AgroindustryManagementAPI.Services.Database;
 using AgroManagementAPI.DTOs.V1.WorkerTask;
+using AgroManagementAPI.Models;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
