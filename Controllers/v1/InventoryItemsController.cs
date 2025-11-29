@@ -1,12 +1,15 @@
 using AutoMapper;
 using AgroindustryManagementAPI.Models;
-using AgroindustryManagementAPI. Services.Database;
-using AgroManagementAPI.DTOs. V1.InventoryItem;
+using AgroindustryManagementAPI.Services.Database;
+using AgroManagementAPI.DTOs.V1.InventoryItem;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgroManagementAPI.Controllers.v1
 {
+    /// <summary>
+    /// Controller for managing inventory items in warehouses
+    /// </summary>
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -24,7 +27,12 @@ namespace AgroManagementAPI.Controllers.v1
         /// <summary>
         /// Get all inventory items
         /// </summary>
+        /// <returns>List of all inventory items</returns>
+        /// <response code="200">Inventory items retrieved successfully</response>
+        /// <response code="500">Internal server error</response>
         [HttpGet]
+        [ProducesResponseType(typeof(List<InventoryItemResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAll()
         {
             try
@@ -40,9 +48,17 @@ namespace AgroManagementAPI.Controllers.v1
         }
 
         /// <summary>
-        /// Get inventory item by ID
+        /// Get an inventory item by ID
         /// </summary>
+        /// <param name="id">Inventory item ID</param>
+        /// <returns>Inventory item data</returns>
+        /// <response code="200">Inventory item retrieved successfully</response>
+        /// <response code="404">Inventory item not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(InventoryItemResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetById(int id)
         {
             try
@@ -63,7 +79,15 @@ namespace AgroManagementAPI.Controllers.v1
         /// <summary>
         /// Create a new inventory item
         /// </summary>
+        /// <param name="itemCreateDto">Inventory item creation data</param>
+        /// <returns>Created inventory item</returns>
+        /// <response code="201">Inventory item created successfully</response>
+        /// <response code="400">Invalid input data</response>
+        /// <response code="500">Internal server error</response>
         [HttpPost]
+        [ProducesResponseType(typeof(InventoryItemResponseDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Create([FromBody] InventoryItemCreateDto itemCreateDto)
         {
             if (!ModelState.IsValid)
@@ -85,7 +109,18 @@ namespace AgroManagementAPI.Controllers.v1
         /// <summary>
         /// Update an existing inventory item
         /// </summary>
+        /// <param name="id">Inventory item ID</param>
+        /// <param name="itemUpdateDto">Updated inventory item data</param>
+        /// <returns>Updated inventory item</returns>
+        /// <response code="200">Inventory item updated successfully</response>
+        /// <response code="400">Invalid input data</response>
+        /// <response code="404">Inventory item not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(InventoryItemResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Update(int id, [FromBody] InventoryItemUpdateDto itemUpdateDto)
         {
             if (!ModelState.IsValid)
@@ -98,7 +133,7 @@ namespace AgroManagementAPI.Controllers.v1
                     return NotFound(new { message = "Inventory item not found" });
 
                 _mapper.Map(itemUpdateDto, existingItem);
-                _databaseService. UpdateInventoryItem(existingItem);
+                _databaseService.UpdateInventoryItem(existingItem);
                 var updatedItemDto = _mapper.Map<InventoryItemResponseDto>(existingItem);
                 return Ok(updatedItemDto);
             }
@@ -111,12 +146,19 @@ namespace AgroManagementAPI.Controllers.v1
         /// <summary>
         /// Delete an inventory item
         /// </summary>
+        /// <param name="id">Inventory item ID</param>
+        /// <response code="204">Inventory item deleted successfully</response>
+        /// <response code="404">Inventory item not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes. Status500InternalServerError)]
         public IActionResult Delete(int id)
         {
             try
             {
-                var item = _databaseService. GetInventoryItemById(id);
+                var item = _databaseService.GetInventoryItemById(id);
                 if (item == null)
                     return NotFound(new { message = "Inventory item not found" });
 

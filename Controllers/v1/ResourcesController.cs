@@ -1,13 +1,16 @@
 using AutoMapper;
 using AgroindustryManagementAPI.Models;
 using AgroindustryManagementAPI.Services.Database;
-using AgroManagementAPI.DTOs.V1. Resource;
+using AgroManagementAPI.DTOs.V1.Resource;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgroManagementAPI.Controllers.v1
 {
-    [ApiVersion("1. 0")]
+    /// <summary>
+    /// Controller for managing agricultural resources (seeds, fertilizers, etc.)
+    /// </summary>
+    [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class ResourcesController : ControllerBase
@@ -24,12 +27,17 @@ namespace AgroManagementAPI.Controllers.v1
         /// <summary>
         /// Get all resources
         /// </summary>
+        /// <returns>List of all resources</returns>
+        /// <response code="200">Resources retrieved successfully</response>
+        /// <response code="500">Internal server error</response>
         [HttpGet]
+        [ProducesResponseType(typeof(List<ResourceResponseDto>), StatusCodes. Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetAll()
         {
             try
             {
-                var resources = _databaseService. GetAllResources();
+                var resources = _databaseService.GetAllResources();
                 var resourcesDto = _mapper.Map<List<ResourceResponseDto>>(resources);
                 return Ok(resourcesDto);
             }
@@ -40,9 +48,17 @@ namespace AgroManagementAPI.Controllers.v1
         }
 
         /// <summary>
-        /// Get resource by ID
+        /// Get a resource by ID
         /// </summary>
+        /// <param name="id">Resource ID</param>
+        /// <returns>Resource data</returns>
+        /// <response code="200">Resource retrieved successfully</response>
+        /// <response code="404">Resource not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(ResourceResponseDto), StatusCodes. Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult GetById(int id)
         {
             try
@@ -63,7 +79,15 @@ namespace AgroManagementAPI.Controllers.v1
         /// <summary>
         /// Create a new resource
         /// </summary>
+        /// <param name="resourceCreateDto">Resource creation data</param>
+        /// <returns>Created resource</returns>
+        /// <response code="201">Resource created successfully</response>
+        /// <response code="400">Invalid input data</response>
+        /// <response code="500">Internal server error</response>
         [HttpPost]
+        [ProducesResponseType(typeof(ResourceResponseDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Create([FromBody] ResourceCreateDto resourceCreateDto)
         {
             if (!ModelState.IsValid)
@@ -85,7 +109,18 @@ namespace AgroManagementAPI.Controllers.v1
         /// <summary>
         /// Update an existing resource
         /// </summary>
+        /// <param name="id">Resource ID</param>
+        /// <param name="resourceUpdateDto">Updated resource data</param>
+        /// <returns>Updated resource</returns>
+        /// <response code="200">Resource updated successfully</response>
+        /// <response code="400">Invalid input data</response>
+        /// <response code="404">Resource not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(ResourceResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes. Status500InternalServerError)]
         public IActionResult Update(int id, [FromBody] ResourceUpdateDto resourceUpdateDto)
         {
             if (!ModelState.IsValid)
@@ -97,7 +132,7 @@ namespace AgroManagementAPI.Controllers.v1
                 if (existingResource == null)
                     return NotFound(new { message = "Resource not found" });
 
-                _mapper. Map(resourceUpdateDto, existingResource);
+                _mapper.Map(resourceUpdateDto, existingResource);
                 _databaseService.UpdateResource(existingResource);
                 var updatedResourceDto = _mapper.Map<ResourceResponseDto>(existingResource);
                 return Ok(updatedResourceDto);
@@ -111,7 +146,14 @@ namespace AgroManagementAPI.Controllers.v1
         /// <summary>
         /// Delete a resource
         /// </summary>
+        /// <param name="id">Resource ID</param>
+        /// <response code="204">Resource deleted successfully</response>
+        /// <response code="404">Resource not found</response>
+        /// <response code="500">Internal server error</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult Delete(int id)
         {
             try
@@ -120,7 +162,7 @@ namespace AgroManagementAPI.Controllers.v1
                 if (resource == null)
                     return NotFound(new { message = "Resource not found" });
 
-                _databaseService. DeleteResource(id);
+                _databaseService.DeleteResource(id);
                 return NoContent();
             }
             catch (Exception ex)
