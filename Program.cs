@@ -1,17 +1,23 @@
-
 using AgroindustryManagementAPI.Services.Calculations;
 using AgroindustryManagementAPI.Services.Database;
 using AgroManagementAPI.Mappings;
 using Asp.Versioning;
-using Asp.Versioning.ApiExplorer;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace AgroManagementAPI
 {
+    /// <summary>
+    /// Main program class for configuring and running the Agroindustry Management API application
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Application entry point
+        /// </summary>
+        /// <param name="args"></param>
+        /// <exception cref="Exception"></exception>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -33,31 +39,48 @@ namespace AgroManagementAPI
                 options.SubstituteApiVersionInUrl = true;     // replaces {version} in route
             });
 
-
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "Agroindustry Management API V1",
-                    Version = "v1"
+                    Version = "v1",
+                    Description = "RESTful API for managing agroindustry operations",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "API Support",
+                        Email = "support@agromanagement.com"
+                    }
                 });
+                
                 c.SwaggerDoc("v2", new OpenApiInfo
                 {
                     Title = "Agroindustry Management API V2",
-                    Version = "v2"
+                    Version = "v2",
+                    Description = "RESTful API V2 with filtering and pagination for managing agroindustry operations",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "API Support",
+                        Email = "support@agromanagement.com"
+                    }
                 });
+                
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                if (File.Exists(xmlPath))
+                {
+                    c.IncludeXmlComments(xmlPath);
+                }
+                
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
-            
+
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-            
+
             builder.Services.AddScoped<IAGCalculationService, AGCalculationService>();
             builder.Services.AddScoped<IAGDatabaseService, AGDatabaseService>();
-            
-            // I got error 'Microsoft.Data.Sqlite.SqliteException (0x80004005): SQLite Error 1: 'no such table: Fields' '
-            // databaseContext.Database.EnsureCreated() should be called
+
             builder.Services.AddDbContext<AGDatabaseContext>(options =>
             {
                 switch (dbProvider?.ToLower())
@@ -72,7 +95,7 @@ namespace AgroManagementAPI
                         options.UseNpgsql(connectionStrings.GetValue<string>("Postgres"));
                         break;
                     case "mysql":
-                        options.UseMySql(connectionStrings. GetValue<string>("MySQL"), 
+                        options.UseMySql(connectionStrings.GetValue<string>("MySQL"), 
                             ServerVersion.AutoDetect(connectionStrings.GetValue<string>("MySQL")));
                         break;
                     case "inmemory":
@@ -95,21 +118,18 @@ namespace AgroManagementAPI
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c=>
+                app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Agroindustry Management API V1");
                     c.SwaggerEndpoint("/swagger/v2/swagger.json", "Agroindustry Management API V2");
+                    c.DocumentTitle = "Agroindustry Management API - Documentation";
                 });
                 app.UseExceptionHandler("/error");
-            };
+            }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }
