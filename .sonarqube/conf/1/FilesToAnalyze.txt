@@ -1,0 +1,9 @@
+﻿/Users/vsevolodburtik/AgroManagementAPI/AgroManagementAPITests/DatabaseFixture.cs
+/Users/vsevolodburtik/AgroManagementAPI/AgroManagementAPITests/InventoryItemsControllerTests.cs
+/Users/vsevolodburtik/AgroManagementAPI/AgroManagementAPITests/MachinesControllerTests.cs
+/Users/vsevolodburtik/AgroManagementAPI/AgroManagementAPITests/ResourcesControllerTests.cs
+/Users/vsevolodburtik/AgroManagementAPI/AgroManagementAPITests/WarehousesControllerTests.cs
+/Users/vsevolodburtik/AgroManagementAPI/AgroManagementAPITests/WorkersControllerTests.cs
+/Users/vsevolodburtik/.nuget/packages/microsoft.net.test.sdk/17.8.0/build/netcoreapp3.1/Microsoft.NET.Test.Sdk.Program.cs
+/Users/vsevolodburtik/.nuget/packages/xunit.runner.visualstudio/3.1.5/build/net8.0/xunit.abstractions.dll
+/Users/vsevolodburtik/.nuget/packages/xunit.runner.visualstudio/3.1.5/build/net8.0/xunit.runner.visualstudio.testadapter.dll
