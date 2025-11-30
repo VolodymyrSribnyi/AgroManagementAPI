@@ -2,8 +2,11 @@
 using AgroindustryManagementAPI.Services.Calculations;
 using AgroindustryManagementAPI.Services.Database;
 using AgroManagementAPI.DTOs;
+using AgroManagementAPI.DTOs.V1.Field;
+using AgroManagementAPI.DTOs.V1.FieldDetails;
 using AgroManagementAPI.Models;
 using Asp.Versioning;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AgroManagementAPI.Controllers.v2
@@ -15,10 +18,12 @@ namespace AgroManagementAPI.Controllers.v2
     {
         private readonly IAGDatabaseService _databaseService;
         private readonly IAGCalculationService _aGCalculationService;
-        public FieldController(IAGDatabaseService databaseService, IAGCalculationService aGCalculationService)
+        private readonly IMapper _mapper;
+        public FieldController(IAGDatabaseService databaseService, IAGCalculationService aGCalculationService, IMapper mapper)
         {
             _databaseService = databaseService;
             _aGCalculationService = aGCalculationService;
+            _mapper = mapper;
         }
         [HttpGet]
         [Route("index")]
@@ -27,7 +32,8 @@ namespace AgroManagementAPI.Controllers.v2
             try
             {
                 var fields = _databaseService.GetAllFields();
-                return Ok(fields);
+                var fieldsDto = _mapper.Map<List<FieldResponseDto>>(fields);
+                return Ok(fieldsDto);
             }
             catch (Exception)
             {
@@ -80,7 +86,8 @@ namespace AgroManagementAPI.Controllers.v2
                     SeedAmount = SeedAmount,
                     Yield = EstimatedYield
                 };
-                return Ok(fieldDetails);
+                var fieldDetailsDto = _mapper.Map<FieldDetailsResponseDto>(fieldDetails);
+                return Ok(fieldDetailsDto);
             }
             catch (KeyNotFoundException ex)
             {

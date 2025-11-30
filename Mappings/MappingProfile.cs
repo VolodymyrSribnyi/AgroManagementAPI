@@ -38,8 +38,7 @@ namespace AgroManagementAPI.Mappings
             CreateMap<MachineUpdateDto, Machine>();
 
             // ============ WORKER TASK MAPPINGS ============
-            CreateMap<WorkerTask, WorkerTaskResponseDto>()
-                .ForMember(dest => dest.Worker, opt => opt.MapFrom(src => src.Worker));
+            CreateMap<WorkerTask, WorkerTaskResponseDto>();
             
             CreateMap<WorkerTaskCreateDto, WorkerTask>();
             CreateMap<WorkerTaskUpdateDto, WorkerTask>();
