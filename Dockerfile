@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["AgroManagementAPI.csproj", "./"]
 RUN dotnet restore "AgroManagementAPI.csproj"
-COPY . . 
+COPY . .
 RUN dotnet build "AgroManagementAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -25,7 +25,7 @@ namespace AgroManagementAPITests.Controllers
         public InventoryItemsControllerTests()
         {
             _databaseFixture = new DatabaseFixture();
-            var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()), new LoggerFactory());
+            var mapperConfig = new MapperConfiguration(mc => mc.AddProfile(new MappingProfile()));
             _mapper = mapperConfig.CreateMapper();
         }
 
