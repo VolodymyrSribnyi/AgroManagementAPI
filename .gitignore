@@ -529,3 +529,5 @@ LoadTesting/load-test-results/*.jtl
 
 # SQLite database files
 *.db
+*.db-shm
+*.db-wal
