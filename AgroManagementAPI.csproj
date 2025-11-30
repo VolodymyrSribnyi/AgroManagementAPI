@@ -13,6 +13,14 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   
+  <!-- Exclude LoadTesting folder from compilation -->
+  <ItemGroup>
+    <Compile Remove="LoadTesting\**" />
+    <Content Remove="LoadTesting\**" />
+    <EmbeddedResource Remove="LoadTesting\**" />
+    <None Remove="LoadTesting\**" />
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
