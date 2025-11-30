@@ -513,3 +513,16 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains,csharp
+
+### Load Testing ###
+# Load test result files (keep .gitkeep)
+LoadTesting/load-test-results/*.csv
+LoadTesting/load-test-results/*.txt
+LoadTesting/load-test-results/*.png
+LoadTesting/load-test-results/*.html
+LoadTesting/load-test-results/*.jtl
+!LoadTesting/load-test-results/.gitkeep
+
+# jMeter logs
+*.log
+*.jtl
