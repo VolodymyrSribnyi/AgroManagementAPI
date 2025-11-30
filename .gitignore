@@ -525,4 +525,4 @@ LoadTesting/load-test-results/*.jtl
 
 # jMeter logs
 *.log
-*.jtl
+*.jtl*.db
