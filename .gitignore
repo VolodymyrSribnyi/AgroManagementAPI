@@ -525,4 +525,7 @@ LoadTesting/load-test-results/*.jtl
 
 # jMeter logs
 *.log
-*.jtl*.db
+*.jtl
+
+# SQLite database files
+*.db
