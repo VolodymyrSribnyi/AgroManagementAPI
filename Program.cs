@@ -5,27 +5,50 @@ using Asp.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
 
 namespace AgroManagementAPI
-{ // asd asdasd asd asd 
-    /// <summary>
-    /// Main program class for configuring and running the Agroindustry Management API application
-    /// </summary>
+{
     public class Program
     {
-        /// <summary>
-        /// Application entry point
-        /// </summary>
-        /// <param name="args"></param>
-        /// <exception cref="Exception"></exception>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             var dbProvider = builder.Configuration["DatabaseSettings:Provider"];
             var connectionStrings = builder.Configuration.GetSection("ConnectionStrings");
-            // Add services to the container.
+            
+            // ========== OPENTELEMETRY CONFIGURATION ==========
+            var resourceBuilder = ResourceBuilder.CreateDefault()
+                .AddService("AgroManagementAPI", serviceVersion: "1.0.0");
 
+            // Add Tracing (WITHOUT Jaeger - only setup for future use)
+            builder.Services. AddOpenTelemetry()
+                .WithTracing(tracingBuilder =>
+                {
+                    tracingBuilder
+                        .SetResourceBuilder(resourceBuilder)
+                        .AddAspNetCoreInstrumentation(options =>
+                        {
+                            options.RecordException = true;
+                        })
+                        .AddSqlClientInstrumentation(options =>
+                        {
+                            options.RecordException = true;
+                        });
+                    // Jaeger exporter removed - will be added later with Zipkin container
+                })
+                .WithMetrics(metricsBuilder =>
+                {
+                    metricsBuilder
+                        .SetResourceBuilder(resourceBuilder)
+                        .AddAspNetCoreInstrumentation()
+                        .AddPrometheusExporter();
+                });
+
+            // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddApiVersioning(options =>
             {
@@ -35,8 +58,8 @@ namespace AgroManagementAPI
             })
             .AddApiExplorer(options =>
             {
-                options.GroupNameFormat = "'v'V";             // v1, v2
-                options.SubstituteApiVersionInUrl = true;     // replaces {version} in route
+                options.GroupNameFormat = "'v'V";
+                options.SubstituteApiVersionInUrl = true;
             });
 
             builder.Services.AddEndpointsApiExplorer();
@@ -126,6 +149,9 @@ namespace AgroManagementAPI
                 });
                 app.UseExceptionHandler("/error");
             }
+
+            // ========== PROMETHEUS METRICS ENDPOINT ==========
+            app.MapPrometheusScrapingEndpoint();
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
