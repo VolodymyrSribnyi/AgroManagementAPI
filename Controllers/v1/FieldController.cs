@@ -66,34 +66,6 @@ namespace AgroManagementAPI.Controllers.v1
             }
             try
             {
-                
-                //field.Workers = new List<Worker>();
-                //if (SelectedWorkerIds != null)
-                //{
-                //    foreach (var workerId in SelectedWorkerIds)
-                //    {
-                //        // Викликаємо одиничний метод для кожного ID
-                //        field.Workers.Add(_databaseService.GetWorkerById(workerId));
-                //    }
-                //}
-
-                //field.Machines = new List<Machine>();
-                //if (SelectedMachineIds != null)
-                //{
-                //    foreach (var machineId in SelectedMachineIds)
-                //    {
-                //        field.Machines.Add(_databaseService.GetMachineById(machineId));
-                //    }
-                //}
-
-                //field.Tasks = new List<WorkerTask>();
-                //if (SelectedTaskIds != null)
-                //{
-                //    foreach (var taskId in SelectedTaskIds)
-                //    {
-                //        field.Tasks.Add(_databaseService.GetWorkerTaskById(taskId));
-                //    }
-                //}
                 var field = _databaseService.AddField(createFieldDTO);
                 return CreatedAtAction(nameof(Details), new { fieldId = field.Id }, field);
             }

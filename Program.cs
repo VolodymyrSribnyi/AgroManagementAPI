@@ -3,6 +3,7 @@ using AgroindustryManagementAPI.Services.Database;
 using AgroManagementAPI.Mappings;
 using Asp.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 
@@ -38,7 +39,16 @@ namespace AgroManagementAPI
                 options.GroupNameFormat = "'v'V";             // v1, v2
                 options.SubstituteApiVersionInUrl = true;     // replaces {version} in route
             });
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:5173") // React app URL
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -76,7 +86,7 @@ namespace AgroManagementAPI
                 c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
 
-            builder.Services.AddAutoMapper(typeof(MappingProfile));
+            builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfile));
 
             builder.Services.AddScoped<IAGCalculationService, AGCalculationService>();
             builder.Services.AddScoped<IAGDatabaseService, AGDatabaseService>();
@@ -128,6 +138,7 @@ namespace AgroManagementAPI
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowReactApp");
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
