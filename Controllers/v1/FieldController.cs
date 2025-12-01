@@ -105,7 +105,7 @@ namespace AgroManagementAPI.Controllers.v1
             try
             {
                 _databaseService.DeleteField(id);
-                return RedirectToAction("Index");
+                return NoContent();
             }
             catch (KeyNotFoundException ex)
             {

@@ -1,6 +1,7 @@
 import { usePost } from "./usePost"; // твій хук
 import { useState } from "react";
-
+import { CultureType} from "./App";
+import { FieldStatus} from "./App";
 const createUrl = "https://localhost:7289/api/v1/Field/create";
 
 interface FieldCreateRequest {
@@ -60,22 +61,46 @@ export function CreateField() {
 
         <div>
           <label className="block font-medium mb-1">Culture</label>
-          <input
-            type="number"
+          <select
+           
             value={culture}
             onChange={(e) => setCulture(parseInt(e.target.value))}
-            className="border rounded w-full px-3 py-2"
-          />
+            className="border border-gray-300 rounded-lg w-full px-4 py-2 focus:ring-green-500 focus:border-green-500 transition duration-150 bg-white"
+            required
+            >
+            {Object.keys(CultureType)
+                                     
+              .filter(key => isNaN(Number(key)))
+                                     
+              .map((key) => (
+                                        
+              <option key={key} value={CultureType[key as keyof typeof CultureType]}>
+              {key}
+               </option>
+                ))}
+          </select>
         </div>
 
         <div>
           <label className="block font-medium mb-1">Status</label>
-          <input
-            type="number"
+           <select
+            
             value={status}
             onChange={(e) => setStatus(parseInt(e.target.value))}
-            className="border rounded w-full px-3 py-2"
-          />
+           className="border border-gray-300 rounded-lg w-full px-4 py-2 focus:ring-green-500 focus:border-green-500 transition duration-150 bg-white"
+           required>
+            {Object.keys(FieldStatus)
+                                     
+              .filter(key => isNaN(Number(key)))
+                                     
+              .map((key) => (
+                                        
+              <option key={key} value={FieldStatus[key as keyof typeof FieldStatus]}>
+              {key}
+               </option>
+                ))}
+           </select>
+          
         </div>
 
         <button
