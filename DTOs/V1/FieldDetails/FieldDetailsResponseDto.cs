@@ -1,5 +1,4 @@
 using AgroindustryManagementAPI.Models;
-using AgroManagementAPI.DTOs.V1.Machine;
 using AgroManagementAPI.DTOs.V1.Worker;
 using AgroManagementAPI.DTOs.V1.WorkerTask;
 
@@ -12,7 +11,6 @@ public class FieldDetailsResponseDto
     public CultureType Culture { get; set; }
     public FieldStatus Status { get; set; }
     public List<WorkerResponseDto>? Workers { get; set; } = new();
-    public List<MachineResponseDto>? Machines { get; set; } = new();
     public List<WorkerTaskResponseDto>? Tasks { get; set; } = new();
     public int RequiredWorkers { get; set; }
     public int RequiredMachines { get; set; }

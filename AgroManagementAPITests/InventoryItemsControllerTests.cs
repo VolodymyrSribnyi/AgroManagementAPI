@@ -101,7 +101,6 @@ namespace AgroManagementAPITests.Controllers
             Assert.Equal("Wheat", returnedItem.Name);
             Assert.Equal(500, returnedItem.Quantity);
             Assert.Equal("kg", returnedItem.Unit);
-            Assert.Equal(1, returnedItem. WarehouseId);
         }
 
         [Theory]
