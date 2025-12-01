@@ -63,7 +63,7 @@ public class AGDatabaseContext : DbContext
            .HasMany(f => f.Tasks)
            .WithOne(t => t.Field)
            .HasForeignKey(t => t.FieldId)
-           .OnDelete(DeleteBehavior.Cascade);
+           .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Warehouse>()
             .HasMany(w => w.InventoryItems)
