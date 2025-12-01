@@ -1,5 +1,4 @@
 using AgroindustryManagementAPI.Models;
-using AgroManagementAPI.DTOs.V1.Machine;
 
 namespace AgroManagementAPI.DTOs.V1.Resource;
 
@@ -12,5 +11,4 @@ public class ResourceResponseDto
     public double WorkerPerHectare { get; set; }
     public double WorkerWorkDuralityPerHectare { get; set; }
     public double Yield { get; set; }
-    public List<MachineResponseDto>? RequiredMachines { get; set; } = new();
 }

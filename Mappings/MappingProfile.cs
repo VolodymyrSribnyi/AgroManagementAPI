@@ -24,15 +24,13 @@ namespace AgroManagementAPI.Mappings
             // ============ FIELD MAPPINGS ============
             CreateMap<Field, FieldResponseDto>()
                 .ForMember(dest => dest.Workers, opt => opt.MapFrom(src => src.Workers))
-                .ForMember(dest => dest. Machines, opt => opt.MapFrom(src => src.Machines))
                 .ForMember(dest => dest.Tasks, opt => opt.MapFrom(src => src.Tasks));
             
             CreateMap<FieldCreateDto, Field>();
             CreateMap<FieldUpdateDto, Field>();
 
             // ============ MACHINE MAPPINGS ============
-            CreateMap<Machine, MachineResponseDto>()
-                .ForMember(dest => dest.Resource, opt => opt.MapFrom(src => src.Resource));
+            CreateMap<Machine, MachineResponseDto>();
             
             CreateMap<MachineCreateDto, Machine>();
             CreateMap<MachineUpdateDto, Machine>();
@@ -44,8 +42,7 @@ namespace AgroManagementAPI.Mappings
             CreateMap<WorkerTaskUpdateDto, WorkerTask>();
 
             // ============ RESOURCE MAPPINGS ============
-            CreateMap<Resource, ResourceResponseDto>()
-                .ForMember(dest => dest.RequiredMachines, opt => opt.MapFrom(src => src.RequiredMachines));
+            CreateMap<Resource, ResourceResponseDto>();
             
             CreateMap<ResourceCreateDto, Resource>();
             CreateMap<ResourceUpdateDto, Resource>();
@@ -65,7 +62,6 @@ namespace AgroManagementAPI.Mappings
             // ============ FIELD DETAILS MAPPINGS ============
             CreateMap<FieldDetails, FieldDetailsResponseDto>()
                 .ForMember(dest => dest.Workers, opt => opt.MapFrom(src => src.Workers))
-                .ForMember(dest => dest.Machines, opt => opt. MapFrom(src => src. Machines))
                 .ForMember(dest => dest.Tasks, opt => opt.MapFrom(src => src.Tasks));
         }
     }

@@ -54,22 +54,27 @@ public class AGDatabaseContext : DbContext
 
         modelBuilder.Entity<Field>()
             .HasMany(f => f.Machines)
-            .WithOne(m => m.Field);
+            .WithOne(m => m.Field)
+            .HasForeignKey(m => m.FieldId)
+            .OnDelete(DeleteBehavior.SetNull);
 
 
         modelBuilder.Entity<Field>()
            .HasMany(f => f.Tasks)
            .WithOne(t => t.Field)
            .HasForeignKey(t => t.FieldId)
-           .OnDelete(DeleteBehavior.Restrict);
+           .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Warehouse>()
             .HasMany(w => w.InventoryItems)
-            .WithOne(i => i.Warehouse);
+            .WithOne(i => i.Warehouse)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Resource>()
             .HasMany(r => r.RequiredMachines)
-            .WithOne(m => m.Resource);
+            .WithOne(m => m.Resource)
+            .HasForeignKey(m => m.ResourceId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<WorkerTask>()
             .HasOne(t => t.Worker)
