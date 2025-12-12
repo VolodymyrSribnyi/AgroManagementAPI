@@ -1,6 +1,6 @@
 # AgroManagement API Load Test Report
 
-**Generated:** 2025-11-30 12:27:20
+**Generated:** 2025-12-01 11:20:53
 
 **API Endpoint:** http://localhost:5122
 
@@ -10,10 +10,10 @@
 
 | Users | Avg (ms) | Min (ms) | Max (ms) | P95 (ms) | Error % | Throughput |
 |-------|----------|----------|----------|----------|---------|------------|
-| 1 | 29.23 | 2 | 248 | 78.00 | 39.82% | 7.53 req/s |
-| 5 | 25.65 | 1 | 520 | 81.00 | 39.85% | 38.73 req/s |
-| 20 | 70.71 | 1 | 662 | 210.00 | 39.83% | 114.33 req/s |
-| 50 | 298.77 | 3 | 1965 | 839.00 | 39.92% | 123.83 req/s |
+| 1 | 66.76 | 33 | 357 | 122.00 | 0.00% | 5.80 req/s |
+| 5 | 111.95 | 30 | 495 | 260.00 | 0.00% | 22.70 req/s |
+| 20 | 475.95 | 45 | 1484 | 853.00 | 0.00% | 34.13 req/s |
+| 50 | 1117.93 | 145 | 2704 | 1804.00 | 0.00% | 40.27 req/s |
 
 ## Analysis
 
@@ -21,8 +21,8 @@
 
 ## Recommendations
 
-- ⚠️ High error rate detected at higher loads. Consider:
-  - Increasing connection pool sizes
-  - Adding database query optimization
-  - Implementing request rate limiting
+- ⚠️ Response times exceed 1 second at peak load. Consider:
+  - Adding caching layer (Redis/Memcached)
+  - Optimizing database queries with indexes
+  - Implementing pagination for large result sets
 

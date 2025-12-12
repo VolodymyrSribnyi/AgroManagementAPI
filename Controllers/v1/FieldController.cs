@@ -33,8 +33,17 @@ namespace AgroManagementAPI.Controllers.v1
             try
             {
                 var fields = _databaseService.GetAllFields();
-                var fieldsDto = _mapper.Map<List<FieldResponseDto>>(fields);
-                return Ok(fieldsDto);
+                var fieldDtos = fields.Select(f => new FieldResponseDto 
+                { 
+                    Id = f.Id, 
+                    Area = f.Area, 
+                    Culture = f.Culture, 
+                    Status = f.Status,
+                    CreatedAt = f. CreatedAt
+                    // БЕЗ Machines! 
+                });
+                
+                return Ok(fieldDtos);
             }
             catch (Exception)
             {

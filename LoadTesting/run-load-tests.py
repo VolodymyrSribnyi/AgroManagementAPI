@@ -29,10 +29,14 @@ import statistics
 import subprocess
 import sys
 import time
+import requests
+import urllib3
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Try to import optional dependencies
 try:
@@ -118,7 +122,8 @@ class LoadTestRunner:
         try:
             response = requests.get(
                 f"{self.base_url}/api/v1/Resources",
-                timeout=5
+                timeout=5,
+                verify=False
             )
             return response.status_code == 200
         except Exception as e:
@@ -131,7 +136,7 @@ class LoadTestRunner:
         start_time = time.time()
         
         try:
-            response = requests.get(url, timeout=30)
+            response = requests.get(url, timeout=30, verify=False)
             elapsed = int((time.time() - start_time) * 1000)
             
             return TestResult(

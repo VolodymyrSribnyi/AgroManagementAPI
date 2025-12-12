@@ -8,9 +8,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="394fa014-d7d7-4a38-af7a-73d2b3a671e2" name="Changes" comment="Add Docker support with MySQL, PostgreSQL, and SQL Server configurations">
+    <list default="true" id="394fa014-d7d7-4a38-af7a-73d2b3a671e2" name="Changes" comment="Refactor controller tests to remove unnecessary LoggerFactory usage and update package references for improved compatibility">
+      <change afterPath="$PROJECT_DIR$/LoadTesting/SeedingApp/SeedingApp/.idea/.idea.SeedingApp.dir/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LoadTesting/SeedingApp/SeedingApp/.idea/.idea.SeedingApp.dir/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LoadTesting/SeedingApp/SeedingApp/.idea/.idea.SeedingApp.dir/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AgroManagementAPI/.idea/httpRequests/http-client.cookies" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AgroManagementAPI/.idea/httpRequests/http-client.cookies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.AgroManagementAPI/.idea/httpRequests/http-requests-log.http" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AgroManagementAPI/.idea/httpRequests/http-requests-log.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.AgroManagementAPI/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.AgroManagementAPI/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AgroManagementAPI.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/AgroManagementAPI.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/0/FilesToAnalyze.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/0/FilesToAnalyze.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/1/FilesToAnalyze.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/1/FilesToAnalyze.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/Sonar-cs-none.ruleset" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/Sonar-cs-none.ruleset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/Sonar-cs.ruleset" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/Sonar-cs.ruleset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/Sonar-vbnet-none.ruleset" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/Sonar-vbnet-none.ruleset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/Sonar-vbnet.ruleset" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/Sonar-vbnet.ruleset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/SonarQubeAnalysisConfig.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/SonarQubeAnalysisConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/cs/SonarLint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/cs/SonarLint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sonarqube/conf/vbnet/SonarLint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.sonarqube/conf/vbnet/SonarLint.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AgroindustryAPI.db" beforeDir="false" afterPath="$PROJECT_DIR$/AgroindustryAPI.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/v1/FieldController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/v1/FieldController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LoadTesting/load-test-results/ANALYSIS_REPORT.md" beforeDir="false" afterPath="$PROJECT_DIR$/LoadTesting/load-test-results/ANALYSIS_REPORT.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LoadTesting/run-load-tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/LoadTesting/run-load-tests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,10 +57,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET Launch Settings Profile.AgroManagementAPI: https.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
     "HTTP Request.AgroManagementAPI | #1.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "IntegrationTests",
+    "git-widget-placeholder": "Lab6",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,6 +72,10 @@
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "postgresql"
+    ],
     "rider.external.source.directories": [
       "/Users/vsevolodburtik/Library/Application Support/JetBrains/Rider2023.3/resharper-host/DecompilerCache",
       "/Users/vsevolodburtik/Library/Application Support/JetBrains/Rider2023.3/resharper-host/SourcesCache",
@@ -60,7 +83,7 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.AgroManagementAPI: http">
+  <component name="RunManager" selected=".NET Launch Settings Profile.AgroManagementAPI: https">
     <configuration name="AgroManagementAPI | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/AgroManagementAPI.http" requestIdentifier="#1" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -94,9 +117,23 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml" />
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="HTTP Request.AgroManagementAPI | #1" />
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
